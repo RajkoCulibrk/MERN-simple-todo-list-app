@@ -1,11 +1,15 @@
 import express from "express";
-const app = express();
 import userRoutes from "./routes/users.js";
 import authRoutes from "./routes/auth.js";
 import todoRoutes from "./routes/todos.js";
+import db from "./config/db.js";
+
+const app = express();
+
+db();
 
 const PORT = process.env.PORT || 5000;
-app.use(express.json());
+app.use(express.json({ extended: false }));
 
 app.get("/", (req, res) => {
   res.send("hello");
