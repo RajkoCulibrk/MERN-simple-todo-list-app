@@ -4,9 +4,16 @@ import User from "../models/User.js";
 import validator from "express-validator";
 const { check, validationResult } = validator;
 import jwt from "jsonwebtoken";
+import auth from "../middleware/auth.js";
 
-router.get("/", (req, res) => {
-  res.send("get logged a user");
+router.get("/", auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select("-password");
+    res.json(user);
+  } catch (err) {
+    console.log(err.message);
+    res.status(5000).send("Server Error");
+  }
 });
 
 router.post(
