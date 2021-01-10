@@ -3,6 +3,7 @@ import userRoutes from "./routes/users.js";
 import authRoutes from "./routes/auth.js";
 import todoRoutes from "./routes/todos.js";
 import db from "./config/db.js";
+import path from "path";
 
 const app = express();
 
@@ -14,5 +15,12 @@ app.use(express.json({ extended: false }));
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/todos", todoRoutes);
+if (process.env.NODE_ENV === "production") {
+  const __dirname = path.dirname(new URL(import.meta.url).pathname);
+  app.use(express.static("client/build"));
+  app.get("*", (req, res) =>
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"))
+  );
+}
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
