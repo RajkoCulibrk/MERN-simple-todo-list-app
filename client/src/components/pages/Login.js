@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button, Container, Alert } from "react-bootstrap";
-import { loadUser, login, register } from "../../context/user/actions";
+import { loadUser, login } from "../../context/user/actions";
 import { useStateValue } from "../../context/user/StateProvider";
 import { Redirect } from "react-router-dom";
 
@@ -32,9 +32,11 @@ const Login = () => {
     if (token) {
       loadUser(dispatch);
     }
+    // eslint-disable-next-line
   }, [token, dispatch]);
   return (
-    <Container>
+    <Container className="mt-5">
+      <h3 className="text-center">Login</h3>
       {authenticated && <Redirect to={"/"} />}
 
       {error && (

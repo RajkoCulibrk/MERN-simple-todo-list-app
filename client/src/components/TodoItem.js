@@ -4,7 +4,7 @@ import { deleteTodo, updateTodo } from "../context/user/actions";
 import { useStateValue } from "../context/user/StateProvider";
 
 const TodoItem = ({ todo }) => {
-  const [state, dispatch] = useStateValue();
+  const [, dispatch] = useStateValue();
   const [editing, setEditing] = useState(false);
   const [important, setImportant] = useState(todo.important);
   const [completed, setCompleted] = useState(todo.completed);
@@ -26,7 +26,6 @@ const TodoItem = ({ todo }) => {
 
   const updateDeleteHandler = () => {
     if (editing) {
-      console.log(completed);
       updateTodo(dispatch, todo._id, { text, important, completed });
       setEditing(false);
     } else {

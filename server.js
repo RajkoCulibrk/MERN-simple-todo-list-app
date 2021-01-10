@@ -11,10 +11,6 @@ db();
 const PORT = process.env.PORT || 5000;
 app.use(express.json({ extended: false }));
 
-app.get("/", (req, res) => {
-  res.send("hello");
-});
-
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/todos", todoRoutes);

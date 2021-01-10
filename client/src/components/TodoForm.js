@@ -4,10 +4,10 @@ import { addTodo } from "../context/user/actions";
 import { useStateValue } from "../context/user/StateProvider";
 
 const TodoForm = () => {
-  const [state, dispatch] = useStateValue();
-  const { user } = state;
+  const [, dispatch] = useStateValue();
+
   const [text, setText] = useState("");
-  const [completed, setStatus] = useState(false);
+
   const [important, setImportance] = useState(false);
 
   const submitHandler = (e) => {

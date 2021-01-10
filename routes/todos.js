@@ -1,6 +1,6 @@
 import express from "express";
 const router = express.Router();
-import User from "../models/User.js";
+
 import validator from "express-validator";
 const { check, validationResult } = validator;
 import auth from "../middleware/auth.js";
@@ -11,7 +11,6 @@ router.get("/", auth, async (req, res) => {
     const todos = await Todo.find({ user: req.user.id }).sort({ date: -1 });
     res.json(todos);
   } catch (err) {
-    console.log(err.message);
     res.status(500).send("server error");
   }
 });
@@ -46,7 +45,6 @@ router.post(
       const todo = await newTdodo.save();
       res.send(todo);
     } catch (err) {
-      console.log(err.message);
       res.status(500).send("server error");
     }
   }
@@ -73,7 +71,6 @@ router.put("/:id", auth, async (req, res) => {
     );
     res.json(todo);
   } catch (err) {
-    console.log(err.message);
     res.status(500).send("server error");
   }
 });
@@ -90,7 +87,6 @@ router.delete("/:id", auth, async (req, res) => {
     await Todo.findByIdAndRemove(req.params.id);
     res.json({ msg: "Todo removed" });
   } catch (err) {
-    console.log(err.message);
     res.status(500).send("server error");
   }
 });

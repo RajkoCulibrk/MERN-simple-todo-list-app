@@ -1,5 +1,5 @@
 import React from "react";
-import { Navbar, Nav, NavItem, Button } from "react-bootstrap";
+import { Navbar, Nav, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useStateValue } from "../../context/user/StateProvider";
 
@@ -11,7 +11,7 @@ const NavbarComponent = () => {
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
       <Link to="/">
         <Navbar.Brand className="text-capitalize">
-          {user.name ? user.name + "'s" : "My"} todo List
+          {user?.name ? user.name + "'s" : "My"} todo List
         </Navbar.Brand>
       </Link>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -19,10 +19,10 @@ const NavbarComponent = () => {
         <Nav className="ml-auto">
           {!authenticated && (
             <>
-              <Link to="/login">
-                <Button className="mr-3">Login</Button>
+              <Link className="ml-auto " to="/login">
+                <Button className="mr-md-3 mt-2 mt-sm-0">Login</Button>
               </Link>
-              <Link to="/register">
+              <Link className="ml-auto mt-2 mt-sm-0" to="/register">
                 <Button>Register</Button>
               </Link>
             </>

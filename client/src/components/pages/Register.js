@@ -33,6 +33,7 @@ const Register = () => {
     if (token) {
       loadUser(dispatch);
     }
+    // eslint-disable-next-line
   }, [token, dispatch]);
 
   const setError = () => {
@@ -42,7 +43,8 @@ const Register = () => {
   };
 
   return (
-    <Container>
+    <Container className="mt-5">
+      <h3 className="text-center">Register</h3>
       {authenticated && <Redirect to={"/"} />}
 
       {error && (

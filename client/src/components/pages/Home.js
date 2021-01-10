@@ -18,6 +18,7 @@ const Home = ({ history }) => {
       history.push("/login");
     }
     loadTodos(dispatch);
+    // eslint-disable-next-line
   }, []);
   return (
     <Container className=" d-flex justify-content-center flex-column">
