@@ -15,12 +15,13 @@ app.use(express.json({ extended: false }));
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/todos", todoRoutes);
+
 if (process.env.NODE_ENV === "production") {
-  const __dirname = path.dirname(new URL(import.meta.url).pathname);
   app.use(express.static("client/build"));
-  app.get("*", (req, res) =>
-    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"))
-  );
+  app.get("*", (req, res) => {
+    const __dirname = path.dirname(new URL(import.meta.url).pathname);
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
 }
 
-app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+app.listen(PORT);

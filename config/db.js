@@ -12,7 +12,6 @@ const connectDB = async () => {
       useFindAndModify: false,
       useUnifiedTopology: true,
     });
-    console.log("connected");
   } catch (error) {
     console.log(err.message);
     process.exit(1);
