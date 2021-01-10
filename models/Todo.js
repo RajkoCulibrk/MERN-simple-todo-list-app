@@ -13,12 +13,10 @@ const TodoSchema = mongoose.Schema({
   },
   completed: {
     type: Boolean,
-
     default: false,
   },
   important: {
     type: Boolean,
-
     default: false,
   },
   date: {

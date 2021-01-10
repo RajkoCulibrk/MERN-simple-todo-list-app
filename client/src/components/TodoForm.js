@@ -9,7 +9,7 @@ const TodoForm = () => {
   const [text, setText] = useState("");
   const [completed, setStatus] = useState(false);
   const [important, setImportance] = useState(false);
-  console.log(important);
+
   const submitHandler = (e) => {
     e.preventDefault();
     addTodo(dispatch, { text, important });
@@ -19,10 +19,11 @@ const TodoForm = () => {
   return (
     <Form
       onSubmit={submitHandler}
-      className="bg-secondary rounded p-3 p-sm-0  mt-3 d-flex align-items-center justify-content-center flex-sm-row flex-column "
+      className="bg-secondary rounded p-3 p-sm-0  mt-3 d-flex align-items-center justify-content-center flex-sm-row flex-column mb-5"
     >
       <Form.Group>
         <Form.Control
+          required
           type="text"
           value={text}
           onChange={(e) => setText(e.target.value)}

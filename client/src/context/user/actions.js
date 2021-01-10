@@ -50,7 +50,6 @@ export const login = async (dispatch, formData) => {
 export const loadUser = async (dispatch) => {
   if (localStorage.token) {
     setAuthToken(localStorage.token);
-    console.log("auth set");
   }
   try {
     const res = await axios.get("/api/auth");
@@ -68,6 +67,7 @@ export const addTodo = async (dispatch, formData) => {
   };
   try {
     axios.post("/api/todos", formData, config);
+    loadTodos(dispatch);
   } catch (err) {
     console.log(err.response.data.msg);
   }
@@ -77,6 +77,22 @@ export const loadTodos = async (dispatch) => {
   try {
     const res = await axios.get("/api/todos");
     dispatch({ type: "LOAD_TODOS", payload: res.data });
+  } catch (err) {
+    console.log(err);
+  }
+};
+export const deleteTodo = async (dispatch, id) => {
+  try {
+    await axios.delete(`/api/todos/${id}`);
+    loadTodos(dispatch);
+  } catch (err) {
+    console.log(err);
+  }
+};
+export const updateTodo = async (dispatch, id, formData) => {
+  try {
+    await axios.put(`/api/todos/${id}`, formData);
+    loadTodos(dispatch);
   } catch (err) {
     console.log(err);
   }

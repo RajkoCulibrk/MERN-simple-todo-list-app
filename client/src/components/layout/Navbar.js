@@ -5,12 +5,14 @@ import { useStateValue } from "../../context/user/StateProvider";
 
 const NavbarComponent = () => {
   const [state, dispatch] = useStateValue();
-  const { authenticated } = state;
+  const { authenticated, user } = state;
 
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
       <Link to="/">
-        <Navbar.Brand>My Todo List</Navbar.Brand>
+        <Navbar.Brand className="text-capitalize">
+          {user.name ? user.name + "'s" : "My"} todo List
+        </Navbar.Brand>
       </Link>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
@@ -26,7 +28,7 @@ const NavbarComponent = () => {
             </>
           )}
           {authenticated && (
-            <Link to="/login">
+            <Link className="ml-auto mt-2 mt-sm-0" to="/login">
               <Button
                 variant="danger"
                 onClick={() => {

@@ -53,12 +53,9 @@ router.post(
 );
 
 router.put("/:id", auth, async (req, res) => {
-  const { text, status, important } = req.body;
+  const { text, completed, important } = req.body;
 
-  const todoFields = {};
-  if (text) todoFields.text = text;
-  if (status) todoFields.status = status;
-  if (important) todoFields.important = important;
+  const todoFields = { text, completed, important };
 
   try {
     let todo = await Todo.findById(req.params.id);
@@ -72,7 +69,7 @@ router.put("/:id", auth, async (req, res) => {
     todo = await Todo.findByIdAndUpdate(
       req.params.id,
       { $set: todoFields },
-      { new: true, runValidators: true }
+      { new: true }
     );
     res.json(todo);
   } catch (err) {
