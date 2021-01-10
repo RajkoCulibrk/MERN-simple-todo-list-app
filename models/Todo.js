@@ -11,18 +11,15 @@ const TodoSchema = mongoose.Schema({
     required: true,
     unique: false,
   },
-  status: {
-    type: String,
-    enum: ["completed", "pending"],
-    default: "pending",
+  completed: {
+    type: Boolean,
+
+    default: false,
   },
-  importance: {
-    type: String,
-    enum: {
-      values: ["urgent", "normal"],
-      message: "Importance can be either urgent or normal",
-    },
-    default: "normal",
+  important: {
+    type: Boolean,
+
+    default: false,
   },
   date: {
     type: Date,

@@ -1,32 +1,31 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button, Container, Alert } from "react-bootstrap";
-import { loadUser, register } from "../../context/user/actions";
+import { loadUser, login, register } from "../../context/user/actions";
 import { useStateValue } from "../../context/user/StateProvider";
 import { Redirect } from "react-router-dom";
 
-const Register = () => {
+const Login = () => {
   const [state, dispatch] = useStateValue();
   const { error, token, authenticated } = state;
 
-  const [email, setEmial] = useState("");
-  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
-  const [password2, setPassword2] = useState("");
-
+  const [email, setEmial] = useState("");
   const submitHandler = (e) => {
     e.preventDefault();
-    if (password !== password2) {
+    if (email && password) {
+      login(dispatch, { email, password });
+    } else {
       dispatch({
         type: "SET_ERROR",
-        payload: "Passwords do not match!",
-      });
-    } else {
-      register(dispatch, { email, password, name });
-
-      dispatch({
-        type: "CLEAR_ERROR",
+        payload: "Both email and password are required!",
       });
     }
+  };
+
+  const setError = () => {
+    dispatch({
+      type: "CLEAR_ERROR",
+    });
   };
   useEffect(() => {
     setError();
@@ -34,13 +33,6 @@ const Register = () => {
       loadUser(dispatch);
     }
   }, [token, dispatch]);
-
-  const setError = () => {
-    dispatch({
-      type: "CLEAR_ERROR",
-    });
-  };
-
   return (
     <Container>
       {authenticated && <Redirect to={"/"} />}
@@ -52,16 +44,6 @@ const Register = () => {
         </Alert>
       )}
       <Form onSubmit={submitHandler}>
-        <Form.Group>
-          <Form.Label>Name</Form.Label>
-          <Form.Control
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            type="text"
-            placeholder="Username"
-          />
-        </Form.Group>
-
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
           <Form.Control
@@ -70,9 +52,6 @@ const Register = () => {
             type="email"
             placeholder="Enter email"
           />
-          <Form.Text className="text-muted">
-            We'll never share your email with anyone else.
-          </Form.Text>
         </Form.Group>
 
         <Form.Group controlId="formBasicPassword">
@@ -85,16 +64,6 @@ const Register = () => {
           />
         </Form.Group>
 
-        <Form.Group controlId="formBasicPassword2">
-          <Form.Label>Confirm password</Form.Label>
-          <Form.Control
-            value={password2}
-            onChange={(e) => setPassword2(e.target.value)}
-            type="password"
-            placeholder="Confirm password"
-          />
-        </Form.Group>
-
         <Button variant="primary" type="submit">
           Submit
         </Button>
@@ -103,4 +72,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Login;

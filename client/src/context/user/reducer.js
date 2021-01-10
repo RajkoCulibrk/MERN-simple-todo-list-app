@@ -3,6 +3,7 @@ export const initialState = {
   error: null,
   authenticated: false,
   user: {},
+  todos: [],
 };
 
 const reducer = (state, action) => {
@@ -37,6 +38,26 @@ const reducer = (state, action) => {
       return {
         ...state,
         error: null,
+      };
+    case "LOGOUT":
+      localStorage.removeItem("token");
+      return {
+        ...state,
+        authenticated: null,
+      };
+
+    case "LOGIN_FAIL":
+      return {
+        ...state,
+        error: action.payload,
+        user: null,
+        token: null,
+        authenticated: false,
+      };
+    case "LOAD_TODOS":
+      return {
+        ...state,
+        todos: action.payload,
       };
     default:
       return state;

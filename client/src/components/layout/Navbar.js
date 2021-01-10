@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useStateValue } from "../../context/user/StateProvider";
 
 const NavbarComponent = () => {
-  const [state] = useStateValue();
+  const [state, dispatch] = useStateValue();
   const { authenticated } = state;
 
   return (
@@ -24,6 +24,18 @@ const NavbarComponent = () => {
                 <Button>Register</Button>
               </Link>
             </>
+          )}
+          {authenticated && (
+            <Link to="/login">
+              <Button
+                variant="danger"
+                onClick={() => {
+                  dispatch({ type: "LOGOUT" });
+                }}
+              >
+                Logout
+              </Button>
+            </Link>
           )}
         </Nav>
       </Navbar.Collapse>

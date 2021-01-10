@@ -29,23 +29,19 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    const { text, importance } = req.body;
+    const { text, important } = req.body;
 
     try {
       const todoFields = {
         text: text,
         user: req.user.id,
       };
-      if (importance) {
-        todoFields.importance = importance;
+      if (important) {
+        todoFields.important = important;
       }
       const newTdodo = new Todo({
         ...todoFields,
       });
-      let error = newTdodo.validateSync();
-      if (error && error.errors.importance) {
-        return res.status(500).send(error.errors.importance.message);
-      }
 
       const todo = await newTdodo.save();
       res.send(todo);
@@ -57,12 +53,12 @@ router.post(
 );
 
 router.put("/:id", auth, async (req, res) => {
-  const { text, status, importance } = req.body;
+  const { text, status, important } = req.body;
 
   const todoFields = {};
   if (text) todoFields.text = text;
   if (status) todoFields.status = status;
-  if (importance) todoFields.importance = importance;
+  if (important) todoFields.important = important;
 
   try {
     let todo = await Todo.findById(req.params.id);
